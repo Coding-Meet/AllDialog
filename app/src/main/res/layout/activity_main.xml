@@ -34,10 +34,32 @@
         android:id="@+id/themeBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Theme Dialog" />
+        android:text="Radio Button Dialog" />
     <Button
         android:id="@+id/customBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Custom Dialog" />
+    <Button
+        android:id="@+id/checkBoxDialogBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox Dialog" />
+
+    <TextView
+        android:id="@+id/unCheckedTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/checkedTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"
+        />
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         val edMessage = customDialog.findViewById<EditText>(R.id.edMessage)
 
         cancelBtn.setOnClickListener {
-            Toast.makeText(this,"Cancel", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
             customDialog.dismiss()
         }
         saveBtn.setOnClickListener {
@@ -130,5 +131,52 @@ class MainActivity : AppCompatActivity() {
             customDialog.show()
 
         }
+
+
+        val checkBoxDialogBtn = findViewById<Button>(R.id.checkBoxDialogBtn)
+        val unCheckedTxt = findViewById<TextView>(R.id.unCheckedTxt)
+        val checkedTxt = findViewById<TextView>(R.id.checkedTxt)
+
+        checkBoxDialogBtn.setOnClickListener {
+            val checkBoxBuilder = AlertDialog.Builder(this@MainActivity)
+            checkBoxBuilder.setTitle("Choose Hobbies")
+            val hobbiesList = arrayListOf(
+                HobbyModel("Gaming", false), // here by default false checked
+                HobbyModel("Swing", true), // here by default true checked
+                HobbyModel("Dancing", false), // here by default false checked
+                HobbyModel("Singing", true), // here by default true checked
+                HobbyModel("Listening", false), // here by default false checked
+            )
+
+            val onlyHobbiesNameList = hobbiesList.map { it.name }.toTypedArray()
+
+            // here return ischecked is true list
+            val onlyHobbiesIsCheckedList = hobbiesList.map { it.isChecked }.toBooleanArray()
+
+            checkBoxBuilder.setMultiChoiceItems(
+                onlyHobbiesNameList,
+                onlyHobbiesIsCheckedList
+            ) { _, position, isChecked ->
+                hobbiesList[position].isChecked = isChecked
+            }
+
+            checkBoxBuilder.setPositiveButton("Ok") { dialog, which ->
+                val unCheckedHobbiesList = hobbiesList.filter { !it.isChecked }.map { it.name }
+                val checkedHobbiesList = hobbiesList.filter { it.isChecked }.map { it.name }
+
+                unCheckedTxt.text = "unCheckedHobbiesList=$unCheckedHobbiesList"
+                checkedTxt.text = "checkedHobbiesList=$checkedHobbiesList"
+            }
+
+            checkBoxBuilder.setNegativeButton("Cancel",null)
+
+            val dialog = checkBoxBuilder.create()
+            dialog.show()
+        }
     }
+
+    data class HobbyModel(
+        val name: String,
+        var isChecked: Boolean = false,
+    )
 }
