@@ -41,6 +41,11 @@
         android:layout_height="wrap_content"
         android:text="Custom Dialog" />
     <Button
+        android:id="@+id/exitDialogBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exit Dialog" />
+    <Button
         android:id="@+id/checkBoxDialogBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

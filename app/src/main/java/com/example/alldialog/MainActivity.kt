@@ -8,13 +8,23 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBackPressedMethod()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        onBackPressedDispatcher.addCallback(this,onBackPressedCallback)
 
         val progressBtn = findViewById<Button>(R.id.progressBtn)
         val builder = AlertDialog.Builder(this)
@@ -173,8 +183,28 @@ class MainActivity : AppCompatActivity() {
             val dialog = checkBoxBuilder.create()
             dialog.show()
         }
+
+        val exitDialogBtn = findViewById<Button>(R.id.exitDialogBtn)
+        exitDialogBtn.setOnClickListener {
+            onBackPressedMethod()
+        }
+
     }
 
+    private fun onBackPressedMethod() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Exit")
+            .setMessage("Are you sure you want to exit?")
+            .setCancelable(false)
+            .setPositiveButton("Yes"){ _,_ ->
+                moveTaskToBack(true)
+                android.os.Process.killProcess(android.os.Process.myPid())
+                exitProcess(1)
+            }
+            .setNegativeButton("No",null)
+            .create()
+            .show()
+    }
     data class HobbyModel(
         val name: String,
         var isChecked: Boolean = false,
